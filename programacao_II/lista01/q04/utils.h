@@ -1,24 +1,24 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct usuarios
+typedef struct
 {
         char nome[20];
         int matricula;
         float media;
-};
+}usuarios;
 
-struct aprovados{
-        struct usuarios aprovados[5];
+typedef struct{
+        usuarios aprovados;
 }aprov;
 
-struct reprovados
+typedef struct
 {
-        struct usuarios reprovados[5];
+        usuarios reprovados;
 }reprov;
 
 // inserindo os valores na struct
-void insertUsers(struct usuarios users[]){
+void insertUsers(usuarios users[]){
         system("@cls||clear");
         printf("\n\n**** Inserindo usuarios no sistema ****\n\n");
         for (int i = 0; i < 5; i++)
@@ -36,36 +36,54 @@ void insertUsers(struct usuarios users[]){
                 printf("\n");
                 getchar();
         }
-}
 
-
-void isAproved(struct usuarios users[]){
-        for (int i = 0; i < 5; i++)
-        {
-                if (users[i].media > 5)
-                {
-                        aprov.aprovados[i] = users[i];
-                }
-        }
-        for (int i = 0; i < 5; i++)
-        {
-                if(users[i].media < 5){
-                        reprov.reprovados[i] = users[i];
-                }
-        }
+        
         
 }
 
-void showResults(){
-        printf("\n\nAprovados: \n");
+
+// Categorizando os alunos reprovados na struct reprov e reprovados na struct reprov
+void categorization(usuarios alunos[], aprov aprovados[], reprov reprovados[], int size){
+
+        int index_aproved = 0, index_reproved;
+
         for (int i = 0; i < 5; i++)
         {
-                printf("%s nota %d\n", aprov.aprovados[i].nome, aprov.aprovados[i].media);
+                if (alunos[i].media >= 5)
+                {
+                        aprovados[index_aproved].aprovados = alunos[i];
+                        index_aproved++;
+                }else{
+                        reprovados[index_reproved].reprovados = alunos[i];
+                        index_reproved++;
+                }
         }
-        printf("\n\nReprovados: \n");
-        for (int i = 0; i < 5; i++)
-        {
-                printf("%s nota %d\n", reprov.reprovados[i].nome, reprov.reprovados[i].media);
-        }
-        printf("\n");
+
+        
 }
+
+
+//Exibindo os dados da struct aprov e reprov
+void show(aprov aprovados[], reprov reprovados[], int size){
+        printf("\nAprovados:\n");
+        for (int i = 0; i < 5; i++)
+        {
+                printf("Aluno(a) %s, nota [%.2f]\n", aprovados[i].aprovados.nome, aprovados[i].aprovados.media);
+                if (aprovados[i+1].aprovados.media == 0)
+                {
+                        break;
+                }
+                
+        }
+
+        printf("\n\nReprovados\n");
+        for (int i = 0; i < 5; i++)
+        {
+                printf("Aluno(a) %s, nota [%.2f]\n", reprovados[i].reprovados.nome, reprovados[i].reprovados.media);
+                if (reprovados[i+1].reprovados.media == 0)
+                {
+                        break;
+                }
+        }
+}
+

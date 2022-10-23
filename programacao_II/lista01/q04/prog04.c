@@ -11,12 +11,14 @@ de reprovados.*/
 #include"utils.h"
 
 int main(){
+        
+        usuarios alunos[5];
+        aprov aprovados[5];
+        reprov reprovados[5];
 
-        struct usuarios alunos[5];
         insertUsers(alunos);
-        isAproved(alunos);
-        showResults();
-
+        categorization(alunos, aprovados, reprovados, 5);
+        show(aprovados, reprovados, 5);
 
 
 

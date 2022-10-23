@@ -45,7 +45,19 @@ void sorteiaCartas(jogador player[]){
                         
                         // guarda no array player->cards->nipe e faces uma carta com uma posicao aleatoria escolhida
                         strcpy(player[i].cards[j].nipes[0],  nipes[rand()%4]);
-                        player[i].cards[j].faces = faces[rand()%13];
+                        //player[i].cards[j].faces = faces[rand()%13];
+                        char face_x = faces[rand()%13];
+
+                        // loop para verificar se existe cartas iguais para o mesmo jogador. Se existir, ele gera um novo e guarda
+                        for (int l = 0; l < 5; l++)
+                        {
+                                if (player[i].cards[l].faces == face_x)
+                                {
+                                        player[i].cards[l].faces = faces[rand()%13];
+                                }else{
+                                        player[i].cards[j].faces = face_x;
+                                } 
+                        }
 
                         // loop para verificar se existem cartas iguais entre os jogadores
                         for (int k = 0; k < 5; k++)
@@ -58,16 +70,6 @@ void sorteiaCartas(jogador player[]){
                                 }
                         }
 
-                        // loop para verificar se existe cartas iguais para o mesmo jogador. Se existir, ele gera um novo e guarda
-                        for (int l = 0; l < 5; l++)
-                        {
-                                if (player[i].cards[j].faces == player[i].cards[l].faces)
-                                {
-                                        player[i].cards[j].faces = faces[rand()%13];
-                                }else{
-                                        player[i].cards[j].faces = faces[rand()%13];
-                                } 
-                        }
                         
                         // imprime todos os dados
                         printf("[%c %s]", player[i].cards[j].faces, player[i].cards[j].nipes);

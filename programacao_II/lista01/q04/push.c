@@ -2,24 +2,20 @@
 #include<stdio.h>
 
 
-void push(int array[], int size, int element[]){
+void push(int element[], int size, int array[]){
 
-        for (int i = 0; i < size; i++)
-        {       
-                array[i] = 0;
-        }
+        int index = 0;
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < 5; i++)
         {
-                for (int j = 0; j < 3; j++)
+                if (element[i]>= 5)
                 {
-                        if (array[i] == 0)
-                        {
-                                array[i] = element[j];
-                                break;
-                        }
+                        array[index] = element[i];
+                        index++;
                 }
+                
         }
+
         for (int i = 0; i < 5; i++)
         {
                 printf("[%d] ", array[i]);
@@ -28,16 +24,14 @@ void push(int array[], int size, int element[]){
 
 }
 
-
-
 int main () {
 
 
-        int array[5];
-        int element[3] = {5, 8, 2};
+        int aprovados[5];
+        int element[5] = {5, 8, 2, 7, 1};
 
 
-        push(array, 5, element);
+        push(element, 5, aprovados);
 
 
 
