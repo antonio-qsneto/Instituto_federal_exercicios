@@ -5,3 +5,4 @@
 - Programação Orientada a Objeto
 - Tecnicas de Projetos de Sistemas
 - Algoritmos
+- Estrutura de Dados
