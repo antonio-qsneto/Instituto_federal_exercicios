@@ -1,67 +1,47 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
 
+#define MAX 100
 
-/* Declaracoes das funcoes */
-int isEven(const int NUM);
-int isPrime(const int NUM);
-
-
-int main()
-{
-    FILE * fPtrIn,
-         * fptrPar, 
-         * fptrImpar;
-
-    
-    int num, success;
-    char file_name[50];
-
-    printf("Entre com o nome do arquivo: ");
-    scanf("%s", file_name);
-
-    fPtrIn   = fopen(file_name, "r");
-    fptrPar = fopen("even-numbers.txt" , "w");
-    fptrImpar  = fopen("odd-numbers.txt"  , "w");
-
-
-    if(fPtrIn == NULL || fptrPar == NULL || fptrImpar == NULL)
-    {
-        printf("Nao eh possivel abrir o arquivo.\n");
-        return 0;
-    }
-
-
-    printf("Arquivo aberto com sucesso. Lendo o conteudo do arquivo...\n\n");
-
-    while (fscanf(fPtrIn, "%d", &num) != -1)
-    {
-
-        if (isEven(num))
-            fprintf(fptrPar, "%d\n", num);
-        else
-            fprintf(fptrImpar, "%d\n", num);
-
-    }
-
-
-    fclose(fPtrIn);
-    fclose(fptrPar);
-    fclose(fptrImpar);
-
-    printf("Data written to files successfully.");
-
-
-    return 0;
+int ehPar(int num){
+        if (num > 0)
+        {
+                return 1;
+        }else{
+                return 0;
+        }       
 }
 
 
-/**
- * A funcao checa se o numero passado eh par ou nao. O programa
- * return 1 if given number is odd, otherwise return 0.
- * retorna 1 se passado um numero impar. Se nao, retorna 0
- */
-int isEven(const int NUM)
-{
-    return !(NUM & 1);
+int main(){
+
+        FILE *file, *file_positivo, *file_negativo;
+        char arquivo[MAX];
+        int num;
+
+        printf("Entre com o nome do arquivo: ");
+        scanf("%s", arquivo);
+
+        file = fopen(arquivo, "r");
+        file_positivo = fopen("positivos", "w");
+        file_negativo = fopen("negativos", "w");
+
+        if (file == NULL || file_positivo == NULL || file_negativo == NULL)
+        {
+                printf("Nao foi possivel abrir os arquivos\n");
+                return 0;
+        }
+
+        while (fgetc(file) != EOF)
+        {
+                fscanf(file, "%d", &num);
+                if (num > 0)
+                {
+                        fprintf(file_positivo, "%d\n", num);
+                }else{
+                        fprintf(file_negativo, "%d\n", num);
+                }
+        }
+
+
+        return 0;
 }

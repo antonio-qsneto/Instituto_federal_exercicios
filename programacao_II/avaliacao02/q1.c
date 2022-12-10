@@ -1,103 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include"utils.h"
 
-#define BUFFER_SIZE 1000
+int main(){
 
-/* Declaracao das funcoes */
-void deleteLine(FILE *srcFile, FILE *tempFile, const int line);
-void printFile(FILE *fptr);
+        FILE *srcFile;
+        FILE *tempFile;
+        char nome_pasta[30];
+        int linha;
 
+        printf("Entre com o nome do arquivo: ");
+        scanf("%s", nome_pasta);
 
-int main()
-{
-    FILE *srcFile;
-    FILE *tempFile;
+        printf("Entre com o numero da linha para remover: ");
+        scanf("%d", &linha);
 
-    char path[100];
+        srcFile = fopen(nome_pasta, "r");
+        tempFile = fopen("delete-line.tmp", "w");
 
-    int line;
+        if (srcFile == NULL || tempFile == NULL)
+        {
+                printf("Nao foi possivel abrir o arquivo\n");
+                return 0;
+        }       
 
+        deleteLine(srcFile, tempFile,linha);
 
-    printf("Entre com o nome do arquivo: ");
-    scanf("%s", path);
+        fclose(srcFile);
+        fclose(tempFile);
 
-    printf("Entre com o numero da linha para remover: ");
-    scanf("%d", &line);
-
-
-    
-    srcFile  = fopen(path, "r");
-    tempFile = fopen("delete-line.tmp", "w");
-
-
-    if (srcFile == NULL || tempFile == NULL)
-    {
-        printf("Unable to open file.\n");
-        printf("Please check you have read/write previleges.\n");
-
-        exit(EXIT_FAILURE);
-    }
+        remove(nome_pasta);
+        rename("delete-line.tmp", nome_pasta);
 
 
-
-    printf("\nFile contents before removing line.\n\n");
-    printFile(srcFile);
-
-
-    // Move o ponteiro do arquivo para o comeco
-    rewind(srcFile);
-
-    // Deleta a linha que foi passada
-    deleteLine(srcFile, tempFile, line);
+        printf("\n\nO arquivo foi editado com sucesso!");
+        
 
 
-    fclose(srcFile);
-    fclose(tempFile);
-
-
-    /* Deleta o arquivo fonte e renomeia o arquivo temporario com o nome do original */
-    remove(path);
-    rename("delete-line.tmp", path);
-
-
-    printf("\n\n\nConteudo do arquivo dos de remover a linha %d.\n\n", line);
-
-    // Abre o arquivo fonte e exibe o conteudo
-    srcFile = fopen(path, "r");
-    printFile(srcFile);
-    fclose(srcFile);
-
-    return 0;
-}
-
-
-/**
- * Exibe o conteudo do arquivo
- */
-void printFile(FILE *fptr)
-{
-    char ch;
-
-    while((ch = fgetc(fptr)) != EOF)
-        putchar(ch);
-}
-
-
-
-/**
- * Funcao que deleta a linha passada
- */
-void deleteLine(FILE *srcFile, FILE *tempFile, const int line)
-{
-    char buffer[BUFFER_SIZE];
-    int count = 1;
-
-    while ((fgets(buffer, BUFFER_SIZE, srcFile)) != NULL)
-    {
-        /* If current line is not the line user wanted to remove */
-        if (line != count)
-            fputs(buffer, tempFile);
-
-        count++;
-    }
+        return 0;
 }

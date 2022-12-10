@@ -1,36 +1,37 @@
-#include <stdio.h>
+#include<stdio.h>
 
 #define MAX 100
 
 int main(){
 
 
-        FILE *file;
-        FILE *file2;
-        char entrada[MAX];
-        int num, sum=0;
+        // caminho relativo temporario/arquivo/positivos
 
-        printf("Entre com o nome do arquvo: ");
-        scanf("%s", entrada);
-        getchar();
+        FILE *file, *file2;
+        char arquivo[MAX];
+        int num, soma=0;
 
-        file = fopen(entrada, "r");
-        file2 = fopen("saida_soma.txt","w");
+        printf("Entre com o nome do arquivo: ");
+        scanf("%s", arquivo);
 
-        if (file == NULL || file2 == NULL) {
-                printf("Arquivo não encontrado");
+        file = fopen(arquivo, "r");
+        file2 = fopen("../temporario/arquivo/soma.txt", "w");
+
+
+        if (file == NULL || file2 == NULL)
+        {
+                printf("Nao foi possivel abrir os arquivos\n");
                 return 0;
         }
 
-        //rewind(file);
-        while (fgetc(file) != EOF){
+        while (fgetc(file) != EOF)
+        {
                 fscanf(file, "%d", &num);
-                sum = sum + num;
+                soma+=num;
         }
-        fprintf(file2,"%d ", sum);
+        fprintf(file2, "%d", soma);
 
-        fclose(file);
-        fclose(file2);
+        printf("\n\nA soma foi efetuada e registrada no arquivo!");
 
-    return 0;
+        return 0;
 }
